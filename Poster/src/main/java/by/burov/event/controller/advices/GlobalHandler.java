@@ -1,9 +1,11 @@
 package by.burov.event.controller.advices;
 
-import by.burov.event.core.api.FieldValidationError;
 import by.burov.event.core.dto.FieldValidationErrorDto;
 import by.burov.event.core.dto.FieldValidationResultDto;
+import by.burov.event.core.errors.FieldValidationError;
+import by.burov.event.core.errors.SingleErrorDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,9 +14,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -38,46 +38,39 @@ public class GlobalHandler {
         return data;
     }
 
-//    @ExceptionHandler
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    public List<Map<String, Object>> handle(IOException e){
-//        List<Map<String, Object>> data = new ArrayList<>();
-//
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("logref", "401");
-//        map.put("message",e.getMessage());
-//
-//        data.add(map);
-//
-//        return data;
-//    }
-
-  /*  @ExceptionHandler
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public List<Map<String, Object>> handle(HttpClientErrorException.Forbidden e){
-        List<Map<String, Object>> data = new ArrayList<>();
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("logref", "403");
-        map.put("message",e.getMessage());
-
-        data.add(map);
-
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public List<SingleErrorDto> handle(RuntimeException e) {
+        List<SingleErrorDto> data = new ArrayList<>();
+        SingleErrorDto errorDto = new SingleErrorDto("error", e.getMessage());
+        data.add(errorDto);
         return data;
-    }*/
-
+    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public List<Map<String, Object>> handle(IllegalStateException e) {
-        List<Map<String, Object>> data = new ArrayList<>();
+    public List<SingleErrorDto> handle(IllegalArgumentException e) {
+        List<SingleErrorDto> data = new ArrayList<>();
+        SingleErrorDto errorDto = new SingleErrorDto("error", e.getMessage());
+        data.add(errorDto);
+        return data;
+    }
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("logref", "500");
-        map.put("message", e.getMessage());
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public List<SingleErrorDto> handle(NullPointerException e) {
+        List<SingleErrorDto> data = new ArrayList<>();
+        SingleErrorDto errorDto = new SingleErrorDto("error", e.getMessage());
+        data.add(errorDto);
+        return data;
+    }
 
-        data.add(map);
-
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public List<SingleErrorDto> handle(UsernameNotFoundException e) {
+        List<SingleErrorDto> data = new ArrayList<>();
+        SingleErrorDto errorDto = new SingleErrorDto("error", e.getMessage());
+        data.add(errorDto);
         return data;
     }
 

@@ -16,14 +16,8 @@ public interface UserMapper {
     @Mapping(target = "authorities", ignore = true)
     User toCreateEntity(CreateUserDto dto);
 
-    @Mapping(target = "authorities", ignore = true)
-    User toReadEntity(ReadUserDto dto);
-
     User toRegistrationEntity(RegistrationUserDto dto);
 
 
-
 }
-    //implement custom mapping from UserRole enum to Authority class
-    // and apply it for all of the methods
 

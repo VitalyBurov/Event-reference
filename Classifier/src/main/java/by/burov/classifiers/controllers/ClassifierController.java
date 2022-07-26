@@ -6,8 +6,6 @@ import by.burov.classifiers.core.dto.CreateConcertCategoryDto;
 import by.burov.classifiers.core.dto.CreateCountryDto;
 import by.burov.classifiers.core.dto.ReadConcertCategoryDto;
 import by.burov.classifiers.core.dto.ReadCountryDto;
-import by.burov.classifiers.repository.entity.ConcertCategory;
-import by.burov.classifiers.repository.entity.Country;
 import by.burov.classifiers.service.api.ConcertService;
 import by.burov.classifiers.service.api.CountryService;
 import org.springframework.http.HttpStatus;

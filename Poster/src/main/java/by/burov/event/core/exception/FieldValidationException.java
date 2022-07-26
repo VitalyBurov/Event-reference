@@ -1,6 +1,6 @@
 package by.burov.event.core.exception;
 
-import by.burov.event.core.api.FieldValidationError;
+import by.burov.event.core.errors.FieldValidationError;
 
 import java.util.List;
 

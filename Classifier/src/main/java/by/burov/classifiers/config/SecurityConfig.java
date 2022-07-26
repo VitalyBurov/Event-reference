@@ -1,12 +1,11 @@
-package by.burov.user.config;
+package by.burov.classifiers.config;
 
-import by.burov.user.core.filter.JwtFilter;
-import org.springframework.context.annotation.Bean;
+import by.burov.classifiers.controllers.filter.JwtFilter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // disable CORS and disable CSRF
+        // Enable CORS and disable CSRF
         http = http.cors().and().csrf().disable();
 
         // Set session management to stateless
@@ -47,13 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                .antMatchers("/api/v1/users/me").authenticated()
-                .antMatchers("/api/v1/users/login").anonymous()
-                .antMatchers("/api/v1/users/registration").anonymous()
-                .antMatchers("/api/v1/users/**").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.POST).hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET).permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();
-
 
         // Add JWT token filter
         http.addFilterBefore(

@@ -13,8 +13,7 @@ public class Authority implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private UserRole roleName;
+    private String roleName;
 
     @ManyToMany(mappedBy = "authorities")
     private Set<User> users;
@@ -25,13 +24,13 @@ public class Authority implements GrantedAuthority {
         this.id = id;
     }
 
-    public Authority(Long id, UserRole role) {
+    public Authority(Long id, String role) {
         this.id = id;
         this.roleName = role;
     }
 
-    public Authority(UserRole roleName) {
-        this.roleName = roleName;
+    public Authority(String roleName) {
+        this.roleName = roleName.substring(5);
     }
 
     public Long getId() {
@@ -42,11 +41,11 @@ public class Authority implements GrantedAuthority {
         this.id = id;
     }
 
-    public UserRole getRoleName() {
+    public String getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(UserRole roleName) {
+    public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
 
@@ -60,6 +59,6 @@ public class Authority implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return getRoleName().name();
+        return getRoleName();
     }
 }

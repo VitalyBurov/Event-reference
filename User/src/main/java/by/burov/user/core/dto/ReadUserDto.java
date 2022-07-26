@@ -22,9 +22,7 @@ public class ReadUserDto {
     private LocalDateTime dtUpdate;
     private String mail;
     private String nick;
-
-    @Enumerated(EnumType.STRING)
-    private Set<UserRole> roles;
+    private Set<String> roles;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
@@ -61,11 +59,11 @@ public class ReadUserDto {
         this.mail = mail;
     }
 
-    public Set<UserRole> getRoles() {
+    public Set<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<UserRole> roles) {
+    public void setRoles(Set<String> roles) {
         this.roles = roles;
     }
 

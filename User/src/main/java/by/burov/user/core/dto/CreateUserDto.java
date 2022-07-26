@@ -10,9 +10,7 @@ public class CreateUserDto {
 
     private String mail;
     private String nick;
-
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private String role;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
@@ -35,11 +33,11 @@ public class CreateUserDto {
         this.nick = nick;
     }
 
-    public UserRole getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

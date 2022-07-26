@@ -1,10 +1,8 @@
 package by.burov.user.service.api;
 
 import by.burov.user.core.dto.CreateUserDto;
-import by.burov.user.core.dto.LoginUserDto;
 import by.burov.user.core.dto.ReadUserDto;
 import by.burov.user.core.dto.RegistrationUserDto;
-import by.burov.user.repository.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 
@@ -14,11 +12,13 @@ import java.util.UUID;
 
 
 @Validated
-public interface UserService{
+public interface AdminService {
 
-    ReadUserDto register(@Valid RegistrationUserDto dto);
+    ReadUserDto save(@Valid CreateUserDto dto);
 
-    User login(@Valid LoginUserDto loginUserDto);
+    Page<ReadUserDto> readAll(int pageNo, int pageSize);
 
-    ReadUserDto getUserInfo();
+    ReadUserDto getUserByUuid(UUID uuid);
+
+    ReadUserDto update(UUID uuid, LocalDateTime dtUpdate, @Valid CreateUserDto dto);
 }

@@ -1,11 +1,7 @@
 package by.burov.event.repository.entity;
 
-import by.burov.event.controller.utills.json.LocalDateTimeDeserializer;
-import by.burov.event.controller.utills.json.LocalDateTimeSerializer;
 import by.burov.event.core.enums.EventStatus;
 import by.burov.event.core.enums.EventType;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -23,13 +19,9 @@ public class Event {
     private UUID uuid;
 
     @Column(name = "dt_create")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dtCreate;
 
     @Column(name = "dt_update")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Version
     private LocalDateTime dtUpdate;
 
@@ -40,14 +32,9 @@ public class Event {
     private String description;
 
     @Column(name = "dt_event")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dtEvent;
 
-
     @Column(name = "dt_dt_end_of_sale")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dtEndOfSale;
 
     @Column(name = "type")
@@ -57,6 +44,9 @@ public class Event {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private EventStatus status;
+
+    @Column(name = "author")
+    private String author;
 
     public UUID getUuid() {
         return uuid;
@@ -128,5 +118,13 @@ public class Event {
 
     public void setStatus(EventStatus status) {
         this.status = status;
+    }
+
+    public String getOwner() {
+        return author;
+    }
+
+    public void setOwner(String owner) {
+        this.author = owner;
     }
 }

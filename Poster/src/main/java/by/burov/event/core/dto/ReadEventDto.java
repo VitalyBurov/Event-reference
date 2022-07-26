@@ -27,6 +27,7 @@ public abstract class ReadEventDto {
     private LocalDateTime dtEndOfSale;
     private EventType type;
     private EventStatus status;
+    private String author;
 
     public UUID getUuid() {
         return uuid;
@@ -98,6 +99,14 @@ public abstract class ReadEventDto {
 
     public void setStatus(EventStatus status) {
         this.status = status;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
 

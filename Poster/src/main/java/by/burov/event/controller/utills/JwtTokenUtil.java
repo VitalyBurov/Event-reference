@@ -1,12 +1,11 @@
-package by.burov.user.controller.utills.token;
+package by.burov.event.controller.utills;
 
-import by.burov.user.repository.entity.User;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class JwtTokenUtil {
@@ -15,19 +14,10 @@ public class JwtTokenUtil {
     private static final String jwtIssuer = "ITAcademy";
 
 
-    public static String generateAccessToken(User user) {
-        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-        ArrayList<String> authsList = new ArrayList<>(authorities.size());
-        for (GrantedAuthority authority : authorities) {
-            authsList.add(authority.getAuthority());
-        }
-        return generateAccessToken(user.getUsername(), authsList);
-    }
-
-    public static String generateAccessToken(String name, ArrayList<String> roles) {
+    public static String generateAccessToken(UserDetails user) {
         return Jwts.builder()
-                .setSubject(name)
-                .claim("role", roles)
+                .setSubject(user.getUsername())
+                .setClaims((Claims) user.getAuthorities())
                 .setIssuer(jwtIssuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(7))) // 1 week
@@ -44,6 +34,27 @@ public class JwtTokenUtil {
         return claims.getSubject();
     }
 
+    public static Collection<? extends GrantedAuthority> getAuthorities(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        Collection<?> roles = claims.get("role", Collection.class);
+
+        if (roles == null){
+            return Collections.emptyList();
+        }else {
+            ArrayList<GrantedAuthority> authsList = new ArrayList<>(roles.size());
+
+            for (Object role : roles) {
+                authsList.add(new SimpleGrantedAuthority(role.toString()));
+            }
+
+            return Collections.unmodifiableList(authsList);
+        }
+    }
+
     public static Date getExpirationDate(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
@@ -57,6 +68,7 @@ public class JwtTokenUtil {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
+
         } catch (SignatureException ex) {
             //logger.error("Invalid JWT signature - {}", ex.getMessage());
         } catch (MalformedJwtException ex) {
