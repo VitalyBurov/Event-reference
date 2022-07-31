@@ -10,11 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 public class ConcertServiceImpl implements ConcertService {
 
     private ConcertDao categoryDao;
@@ -27,6 +29,7 @@ public class ConcertServiceImpl implements ConcertService {
 
 
     @Override
+    @Transactional
     public ReadConcertCategoryDto save(CreateConcertCategoryDto dto) {
         ConcertCategory category = mappingService.mapCreateConcert(dto);
         category.setDtCreate(LocalDateTime.now());
@@ -37,6 +40,7 @@ public class ConcertServiceImpl implements ConcertService {
 
 
     @Override
+    @Transactional
     public Page<ReadConcertCategoryDto> readAll (int pageNo, int pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
 
@@ -51,6 +55,7 @@ public class ConcertServiceImpl implements ConcertService {
     }
 
     @Override
+    @Transactional
     public ReadConcertCategoryDto getByUuid(UUID uuid) {
         ConcertCategory concertCategory = categoryDao.findById(uuid).get();
         ReadConcertCategoryDto dto = mappingService.mapReadConcert(concertCategory);

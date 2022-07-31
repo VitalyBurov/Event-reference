@@ -2,6 +2,7 @@ package by.burov.user.config;
 
 import by.burov.user.core.filter.JwtFilter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -47,10 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                .antMatchers("/api/v1/users/me").authenticated()
-                .antMatchers("/api/v1/users/login").anonymous()
-                .antMatchers("/api/v1/users/registration").anonymous()
-                .antMatchers("/api/v1/users/**").hasAnyRole("ADMIN")
+                .antMatchers("/users/registration").anonymous()
+                .antMatchers("/users/login").anonymous()
+                .antMatchers("/users/me").authenticated()
+                .antMatchers("/users/**").hasAnyRole("ADMIN").
+                antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN")
                 // Our private endpoints
                 .anyRequest().authenticated();
 

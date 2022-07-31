@@ -41,8 +41,8 @@ public class FilmServiceImpl implements FilmService {
     public ReadFilmDto save(CreateFilmDto dto) {
 
         RestTemplate restTemplate = new RestTemplate();
-        String concertResourceUrl = "http://localhost/api/v1/classifier/country";
-        ResponseEntity<String> response = restTemplate.getForEntity(concertResourceUrl + "/" + dto.getCountry(), String.class);
+        String filmResourceUrl = "http://classifier-service:81/classifier/country";;
+        ResponseEntity<String> response = restTemplate.getForEntity(filmResourceUrl + "/" + dto.getCountry(), String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             Film film = mapperService.filmEntity(dto);
             film.setOwner(userHolder.getUser().getUsername());
@@ -79,6 +79,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    @Transactional
     public ReadFilmDto getEventByUuid(UUID uuid) {
 
         UserDetails user = userHolder.getUser();
@@ -100,6 +101,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    @Transactional
     public ReadFilmDto update(UUID uuid, LocalDateTime dtUpdate, CreateFilmDto dto) {
         UserDetails user = userHolder.getUser();
 
@@ -108,12 +110,12 @@ public class FilmServiceImpl implements FilmService {
         }
 
         RestTemplate restTemplate = new RestTemplate();
-        String concertResourceUrl = "http://localhost/api/v1/classifier/country";
-        ResponseEntity<String> response = restTemplate.getForEntity(concertResourceUrl + "/" + dto.getCountry(), String.class);
+        String filmResourceUrl = "http://classifier-service:81/classifier/country";
+        ResponseEntity<String> response = restTemplate.getForEntity(filmResourceUrl + "/" + dto.getCountry(), String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             ReadFilmDto dtoFromDB = this.getEventByUuid(uuid);
 
-            if (!user.getUsername().equals(dtoFromDB.getAuthor())) {
+            if (!user.getUsername().equals(dtoFromDB.getAuthor()) || user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
                 throw new IllegalArgumentException("You can't edit this event!");
             }
 
@@ -123,6 +125,7 @@ public class FilmServiceImpl implements FilmService {
             //should refactor check to null every field
             Film film = mapperService.filmEntity(dtoFromDB);
             addFields(dto, film);
+            film.setOwner(dtoFromDB.getAuthor());
             ReadFilmDto readFilmDto = mapperService.readFilmDto(filmsDao.save(film));
             return readFilmDto;
         } else {

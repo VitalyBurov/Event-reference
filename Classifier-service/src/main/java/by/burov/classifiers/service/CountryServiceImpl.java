@@ -10,11 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 public class CountryServiceImpl implements CountryService {
 
     private CountryDao countryDao;
@@ -26,6 +28,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
+    @Transactional
     public ReadCountryDto save (CreateCountryDto dto) {
         Country country = mappingService.mapCreateCountry(dto);
         country.setDtCreate(LocalDateTime.now());
@@ -35,6 +38,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
+    @Transactional
     public Page<ReadCountryDto> readAll (int pageNo, int pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
 
@@ -49,6 +53,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
+    @Transactional
     public ReadCountryDto getByUuid(UUID uuid) {
         Country country = countryDao.findById(uuid).get();
         ReadCountryDto dto = mappingService.mapReadCountry(country);

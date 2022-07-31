@@ -8,7 +8,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:postgresql://db:5432/user_service
+    url: jdbc:postgresql://db:5432/user_service?currentSchema=security
     driver-class-name: org.postgresql.Driver
 server:
   port: 83

@@ -43,7 +43,7 @@ public class ConcertServiceImpl implements ConcertService {
         RestTemplate restTemplate = new RestTemplate();
         String concertResourceUrl
                 //add to properties
-                = "http://localhost:84/api/v1/classifier/concert/category";
+                = "http://classifier-service:81/classifier/concert/category";
         ResponseEntity<String> response
                 = restTemplate.getForEntity(concertResourceUrl + "/" + dto.getCategory(),
                 String.class);
@@ -117,14 +117,14 @@ public class ConcertServiceImpl implements ConcertService {
         }
         RestTemplate restTemplate = new RestTemplate();
         String concertResourceUrl
-                = "http://localhost:84/api/v1/classifier/concert/category";
+                = "http://classifier-service:81/classifier/concert/category";;
         ResponseEntity<String> response
                 = restTemplate.getForEntity(concertResourceUrl + "/" + dto.getCategory(),
                 String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             ReadConcertDto dtoFromDB = this.getEventByUuid(uuid);
 
-            if (!user.getUsername().equals(dtoFromDB.getAuthor())) {
+            if (!user.getUsername().equals(dtoFromDB.getAuthor()) || user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
                 throw new IllegalArgumentException("You can't edit this event!");
             }
 
@@ -132,8 +132,8 @@ public class ConcertServiceImpl implements ConcertService {
                 throw new IllegalArgumentException("The Film was updated before you!!!");
             }
             Concert concert = mapperService.concertEntity(dtoFromDB);
-            // Should Refactor
             addFields(dto, concert);
+            concert.setOwner(dtoFromDB.getAuthor());
             ReadConcertDto readConcertDto = mapperService.readConcertDto(concertsDao.save(concert));
             return readConcertDto;
         } else {
