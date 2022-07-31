@@ -91,15 +91,12 @@ public class ConcertServiceImpl implements ConcertService {
         if (user == null) {
             concert = concertsDao.findByUuidAndStatus(uuid, EventStatus.PUBLISHED)
                     .orElseThrow(() -> new EntityNotFoundException("error", "Not found!!"));
-            ;
 
         } else if (user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             concert = concertsDao.findById(uuid).orElseThrow(() -> new EntityNotFoundException("error", "Not found!!"));
-            ;
         } else {
             concert = concertsDao.findByUuidAndStatusOrAuthor(uuid, EventStatus.PUBLISHED, user.getUsername())
                     .orElseThrow(() -> new EntityNotFoundException("error", "Not found!!"));
-            ;
         }
 
         ReadConcertDto dto = mapperService.readConcertDto(concert);

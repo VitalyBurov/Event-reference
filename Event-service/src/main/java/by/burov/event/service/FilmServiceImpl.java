@@ -122,7 +122,6 @@ public class FilmServiceImpl implements FilmService {
             if (!dtoFromDB.getDtUpdate().equals(dtUpdate)) {
                 throw new IllegalArgumentException("The Film was updated before you!!!");
             }
-            //should refactor check to null every field
             Film film = mapperService.filmEntity(dtoFromDB);
             addFields(dto, film);
             film.setOwner(dtoFromDB.getAuthor());

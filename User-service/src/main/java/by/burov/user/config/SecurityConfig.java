@@ -51,10 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/registration").anonymous()
                 .antMatchers("/users/login").anonymous()
                 .antMatchers("/users/me").authenticated()
-                .antMatchers("/users/**").hasAnyRole("ADMIN").
-                antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN")
                 // Our private endpoints
-                .anyRequest().authenticated();
+                .anyRequest().hasRole("ADMIN");
 
 
         // Add JWT token filter
