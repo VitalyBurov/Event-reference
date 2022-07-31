@@ -1,9 +1,14 @@
 package by.burov.user.core.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class RegistrationUserDto {
 
+    @NotBlank
     private String mail;
+    @NotBlank
     private String nick;
+    @NotBlank
     private String password;
 
     public String getMail() {

@@ -1,20 +1,26 @@
 package by.burov.user.core.dto;
 
-import by.burov.user.core.enums.UserRole;
 import by.burov.user.core.enums.UserStatus;
+import com.sun.istack.NotNull;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotBlank;
 
 public class CreateUserDto {
 
+    @NotBlank
     private String mail;
+    @NotBlank
     private String nick;
+    @NotBlank
     private String role;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @NotBlank
     private String password;
 
     public String getMail() {

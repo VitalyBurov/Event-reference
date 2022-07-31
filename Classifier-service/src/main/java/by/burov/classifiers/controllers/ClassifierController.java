@@ -1,7 +1,7 @@
 package by.burov.classifiers.controllers;
 
-import by.burov.classifiers.core.api.APIConverter;
-import by.burov.classifiers.core.api.APIResponse;
+import by.burov.classifiers.core.api.PageConverter;
+import by.burov.classifiers.core.api.PageResponse;
 import by.burov.classifiers.core.dto.CreateConcertCategoryDto;
 import by.burov.classifiers.core.dto.CreateCountryDto;
 import by.burov.classifiers.core.dto.ReadConcertCategoryDto;
@@ -36,9 +36,9 @@ public class ClassifierController {
 
 
     @GetMapping("/country")
-    public ResponseEntity<APIResponse<ReadCountryDto>> getAllCountries(@RequestParam(defaultValue = "1") Integer pageNo,
-                                                                       @RequestParam(defaultValue = "10") Integer pageSize) {
-        APIResponse<ReadCountryDto> response = new APIConverter<ReadCountryDto>().convert(countryService.readAll(pageNo-1, pageSize));
+    public ResponseEntity<PageResponse<ReadCountryDto>> getAllCountries(@RequestParam(defaultValue = "1") Integer pageNo,
+                                                                        @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageResponse<ReadCountryDto> response = new PageConverter<ReadCountryDto>().convert(countryService.readAll(pageNo-1, pageSize));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -55,9 +55,9 @@ public class ClassifierController {
     }
 
     @GetMapping("/concert/category")
-    public ResponseEntity<APIResponse<ReadConcertCategoryDto>> getAllCategories(@RequestParam(defaultValue = "1") Integer pageNo,
-                                                                                @RequestParam(defaultValue = "10") Integer pageSize) {
-        APIResponse<ReadConcertCategoryDto> response = new APIConverter<ReadConcertCategoryDto>().convert(concertCategoryService.readAll(pageNo-1, pageSize));
+    public ResponseEntity<PageResponse<ReadConcertCategoryDto>> getAllCategories(@RequestParam(defaultValue = "1") Integer pageNo,
+                                                                                 @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageResponse<ReadConcertCategoryDto> response = new PageConverter<ReadConcertCategoryDto>().convert(concertCategoryService.readAll(pageNo-1, pageSize));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

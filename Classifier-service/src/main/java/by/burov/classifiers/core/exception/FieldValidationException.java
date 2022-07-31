@@ -1,6 +1,6 @@
 package by.burov.classifiers.core.exception;
 
-import by.burov.classifiers.core.api.FieldValidationError;
+import by.burov.classifiers.core.errors.FieldValidationError;
 
 import java.util.List;
 

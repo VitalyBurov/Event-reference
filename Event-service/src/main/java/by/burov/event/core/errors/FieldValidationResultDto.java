@@ -1,4 +1,4 @@
-package by.burov.event.core.dto;
+package by.burov.event.core.errors;
 
 import java.util.List;
 

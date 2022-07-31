@@ -1,10 +1,10 @@
 package by.burov.classifiers.core.dto;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 public class CreateConcertCategoryDto {
 
-        @NotNull
+        @NotBlank
         private String title;
 
         public String getTitle() {

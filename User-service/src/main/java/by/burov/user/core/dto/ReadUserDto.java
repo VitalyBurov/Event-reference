@@ -1,7 +1,6 @@
 package by.burov.user.core.dto;
 
 import by.burov.user.controller.utills.json.LocalDateTimeSerializer;
-import by.burov.user.core.enums.UserRole;
 import by.burov.user.core.enums.UserStatus;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

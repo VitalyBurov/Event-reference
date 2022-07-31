@@ -1,8 +1,8 @@
 package by.burov.classifiers.controllers.advices;
 
-import by.burov.classifiers.core.api.FieldValidationError;
-import by.burov.classifiers.core.dto.FieldValidationErrorDto;
-import by.burov.classifiers.core.dto.FieldValidationResultDto;
+import by.burov.classifiers.core.errors.FieldValidationError;
+import by.burov.classifiers.core.errors.FieldValidationErrorDto;
+import by.burov.classifiers.core.errors.FieldValidationResultDto;
 import by.burov.classifiers.core.errors.SingleErrorDto;
 import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
@@ -10,16 +10,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice

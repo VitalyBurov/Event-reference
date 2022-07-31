@@ -1,7 +1,7 @@
 package by.burov.event.controller;
 
-import by.burov.event.core.api.APIConverter;
-import by.burov.event.core.api.APIResponse;
+import by.burov.event.core.api.PageConverter;
+import by.burov.event.core.api.PageResponse;
 import by.burov.event.core.dto.CreateFilmDto;
 import by.burov.event.core.dto.ReadFilmDto;
 import by.burov.event.service.api.FilmService;
@@ -31,9 +31,9 @@ public class FilmController {
     }
 
     @GetMapping
-    public ResponseEntity<APIResponse<ReadFilmDto>> getAllFilms(@RequestParam(defaultValue = "1") Integer pageNo,
-                                                                @RequestParam(defaultValue = "10") Integer pageSize) {
-        APIResponse<ReadFilmDto> response = new APIConverter<ReadFilmDto>().convert(filmService.readAll(pageNo - 1, pageSize));
+    public ResponseEntity<PageResponse<ReadFilmDto>> getAllFilms(@RequestParam(defaultValue = "1") Integer pageNo,
+                                                                 @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageResponse<ReadFilmDto> response = new PageConverter<ReadFilmDto>().convert(filmService.readAll(pageNo - 1, pageSize));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

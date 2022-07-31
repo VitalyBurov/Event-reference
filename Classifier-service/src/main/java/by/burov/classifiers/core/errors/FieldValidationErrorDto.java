@@ -1,4 +1,4 @@
-package by.burov.classifiers.core.dto;
+package by.burov.classifiers.core.errors;
 
 public class FieldValidationErrorDto {
 

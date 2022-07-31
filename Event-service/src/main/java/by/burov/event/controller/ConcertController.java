@@ -1,16 +1,14 @@
 package by.burov.event.controller;
 
-import by.burov.event.core.api.APIConverter;
-import by.burov.event.core.api.APIResponse;
+import by.burov.event.core.api.PageConverter;
+import by.burov.event.core.api.PageResponse;
 import by.burov.event.core.dto.CreateConcertDto;
 import by.burov.event.core.dto.ReadConcertDto;
-import by.burov.event.repository.entity.Concert;
 import by.burov.event.service.api.ConcertService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -35,9 +33,9 @@ public class ConcertController {
     }
 
     @GetMapping
-    public ResponseEntity<APIResponse<ReadConcertDto>> getAllConcerts(@RequestParam(defaultValue = "1") int pageNo,
-                                                                      @RequestParam(defaultValue = "10") int pageSize) {
-        APIResponse<ReadConcertDto> response = new APIConverter<ReadConcertDto>().convert(concertsService.readAll(pageNo - 1, pageSize));
+    public ResponseEntity<PageResponse<ReadConcertDto>> getAllConcerts(@RequestParam(defaultValue = "1") int pageNo,
+                                                                       @RequestParam(defaultValue = "10") int pageSize) {
+        PageResponse<ReadConcertDto> response = new PageConverter<ReadConcertDto>().convert(concertsService.readAll(pageNo - 1, pageSize));
         return new ResponseEntity<>(
                 response, HttpStatus.OK);
     }

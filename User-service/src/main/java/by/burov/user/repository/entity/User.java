@@ -25,13 +25,9 @@ public class User implements UserDetails {
     private UUID uuid;
 
     @Column(name = "dt_create")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dtCreate;
 
     @Column(name = "dt_update")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Version
     private LocalDateTime dtUpdate;
 

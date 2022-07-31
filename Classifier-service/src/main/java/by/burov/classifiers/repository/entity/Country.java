@@ -1,11 +1,6 @@
 package by.burov.classifiers.repository.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import by.burov.classifiers.controllers.utills.json.LocalDateTimeDeserializer;
-import by.burov.classifiers.controllers.utills.json.LocalDateTimeSerializer;
 import org.hibernate.annotations.GenericGenerator;
-
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,13 +19,9 @@ public class Country {
      private UUID uuid;
 
      @Column(name = "dt_create")
-     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-     @JsonSerialize(using = LocalDateTimeSerializer.class)
      private LocalDateTime dtCreate;
 
      @Column(name = "dt_update")
-     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-     @JsonSerialize(using = LocalDateTimeSerializer.class)
      private LocalDateTime dtUpdate;
 
      @Column(name = "title", unique = true, nullable = false)

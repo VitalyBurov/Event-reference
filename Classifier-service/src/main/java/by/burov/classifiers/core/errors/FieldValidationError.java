@@ -1,4 +1,4 @@
-package by.burov.classifiers.core.api;
+package by.burov.classifiers.core.errors;
 
 public class FieldValidationError {
 

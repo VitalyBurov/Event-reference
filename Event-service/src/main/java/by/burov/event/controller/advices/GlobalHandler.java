@@ -1,7 +1,7 @@
 package by.burov.event.controller.advices;
 
-import by.burov.event.core.dto.FieldValidationErrorDto;
-import by.burov.event.core.dto.FieldValidationResultDto;
+import by.burov.event.core.errors.FieldValidationErrorDto;
+import by.burov.event.core.errors.FieldValidationResultDto;
 import by.burov.event.core.errors.FieldValidationError;
 import by.burov.event.core.errors.SingleErrorDto;
 import org.postgresql.util.PSQLException;

@@ -1,7 +1,7 @@
 package by.burov.user.controller;
 
-import by.burov.user.core.api.APIConverter;
-import by.burov.user.core.api.APIResponse;
+import by.burov.user.core.api.PageConverter;
+import by.burov.user.core.api.PageResponse;
 import by.burov.user.core.dto.CreateUserDto;
 import by.burov.user.core.dto.ReadUserDto;
 import by.burov.user.service.api.AdminService;
@@ -35,9 +35,9 @@ public class AdminController {
     }
 
     @GetMapping
-    public ResponseEntity<APIResponse<ReadUserDto>> getAllUsers(@RequestParam(defaultValue = "1") int pageNo,
-                                                                @RequestParam(defaultValue = "10") int pageSize) {
-        APIResponse<ReadUserDto> response = new APIConverter<ReadUserDto>().convert(adminService.readAll(pageNo - 1, pageSize));
+    public ResponseEntity<PageResponse<ReadUserDto>> getAllUsers(@RequestParam(defaultValue = "1") int pageNo,
+                                                                 @RequestParam(defaultValue = "10") int pageSize) {
+        PageResponse<ReadUserDto> response = new PageConverter<ReadUserDto>().convert(adminService.readAll(pageNo - 1, pageSize));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

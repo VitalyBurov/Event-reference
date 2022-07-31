@@ -1,6 +1,6 @@
 package by.burov.user.controller.advices;
 
-import by.burov.user.core.api.FieldValidationError;
+import by.burov.user.core.errors.FieldValidationError;
 import by.burov.user.core.errors.FieldValidationErrorDto;
 import by.burov.user.core.errors.FieldValidationResultDto;
 import by.burov.user.core.errors.SingleErrorDto;
@@ -10,16 +10,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice

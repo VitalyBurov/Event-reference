@@ -1,11 +1,11 @@
-package by.burov.event.core.dto;
+package by.burov.user.core.errors;
 
-public class FieldValidationErrorDto {
+public class FieldValidationError {
 
     private String field;
     private String message;
 
-    public FieldValidationErrorDto(String field, String message){
+    public FieldValidationError(String field, String message){
         this.field = field;
         this.message = message;
     }

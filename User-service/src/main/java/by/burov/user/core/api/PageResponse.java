@@ -2,7 +2,7 @@ package by.burov.user.core.api;
 
 import java.util.List;
 
-public class APIResponse<T>{
+public class PageResponse<T>{
 
     private int number;
     private int size;
@@ -13,7 +13,7 @@ public class APIResponse<T>{
     private boolean last;
     private List<T> content;
 
-    public APIResponse(int number, int size, int totalPages, long totalElements, boolean first, int numberOfElements, boolean last, List<T> content) {
+    public PageResponse(int number, int size, int totalPages, long totalElements, boolean first, int numberOfElements, boolean last, List<T> content) {
         this.number = number;
         this.size = size;
         this.totalPages = totalPages;
