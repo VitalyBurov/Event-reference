@@ -4,6 +4,7 @@ import by.burov.classifiers.core.api.FieldValidationError;
 import by.burov.classifiers.core.dto.FieldValidationErrorDto;
 import by.burov.classifiers.core.dto.FieldValidationResultDto;
 import by.burov.classifiers.core.errors.SingleErrorDto;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -76,6 +77,17 @@ public class GlobalHandler {
         List<SingleErrorDto> data = new ArrayList<>();
         SingleErrorDto errorDto = new SingleErrorDto("error", e.getMessage());
         data.add(errorDto);
+        return data;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<SingleErrorDto> handle(PSQLException e) {
+
+        List<SingleErrorDto> data = new ArrayList<>();
+
+        data.add(new SingleErrorDto("error",e.getServerErrorMessage().getDetail()));
+
         return data;
     }
 
