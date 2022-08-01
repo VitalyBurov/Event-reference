@@ -121,7 +121,7 @@ public class ConcertServiceImpl implements ConcertService {
         if (response.getStatusCode() == HttpStatus.OK) {
             ReadConcertDto dtoFromDB = this.getEventByUuid(uuid);
 
-            if (!user.getUsername().equals(dtoFromDB.getAuthor()) || user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            if (!user.getUsername().equals(dtoFromDB.getAuthor()) || !user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
                 throw new IllegalArgumentException("You can't edit this event!");
             }
 

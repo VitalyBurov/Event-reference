@@ -51,6 +51,6 @@ public class ConcertController {
                                                         @RequestBody CreateConcertDto concert) {
         LocalDateTime dtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dt), ZoneId.systemDefault());
 
-        return new ResponseEntity<>(concertsService.update(uuid, dtUpdate, concert), HttpStatus.CREATED);
+        return new ResponseEntity<>(concertsService.update(uuid, dtUpdate, concert), HttpStatus.OK);
     }
 }

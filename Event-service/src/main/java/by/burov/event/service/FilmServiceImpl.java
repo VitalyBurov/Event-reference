@@ -115,7 +115,7 @@ public class FilmServiceImpl implements FilmService {
         if (response.getStatusCode() == HttpStatus.OK) {
             ReadFilmDto dtoFromDB = this.getEventByUuid(uuid);
 
-            if (!user.getUsername().equals(dtoFromDB.getAuthor()) || user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            if (!user.getUsername().equals(dtoFromDB.getAuthor()) || !user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
                 throw new IllegalArgumentException("You can't edit this event!");
             }
 

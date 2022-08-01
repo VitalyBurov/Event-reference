@@ -49,7 +49,7 @@ public class FilmController {
         //Should refactor
         LocalDateTime dtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dt), ZoneId.systemDefault());
 
-        return new ResponseEntity<>(filmService.update(uuid, dtUpdate, film), HttpStatus.CREATED);
+        return new ResponseEntity<>(filmService.update(uuid, dtUpdate, film), HttpStatus.OK);
     }
 
 
